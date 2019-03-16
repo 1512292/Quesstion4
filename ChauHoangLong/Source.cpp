@@ -8,20 +8,29 @@ typedef int semaphore;
 IVehicle* bmw = new BMWCar();
 IVehicle* toyota = new ToyotaCar();
 mutex mtx;
-semaphore mutexBMW = 1;
-semaphore mutexToyota = 0;
+semaphore mutexBMW = 2;
+semaphore mutexToyota = 1;
 
 void runBMW() {
-	std::mutex
+	if (mutexBMW--) {
+		bmw->run();
+		mutexToyota++;
+	}
 }
 
+void runToyota() {
+	if (mutexToyota--) {
+		toyota->run();
+		mutexBMW++;
+	}
+}
 
 void main() {
 
 	
 
-	std::thread toyotaThread(run, toyota);
-	std::thread bmwThread(run, bmw);
+	std::thread toyotaThread(runToyota);
+	std::thread bmwThread(runBMW);
 
 	toyotaThread.join();
 	bmwThread.join();
