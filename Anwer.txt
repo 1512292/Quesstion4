@@ -1,0 +1,4 @@
+﻿Giai pháp:
+sử dụng semaphore để thực hiện đồng bộ.
+1 xe chỉ có thể run khi down thành công mutex tương ứng của nó xuống,
+sau đó sẽ thực hiện up mutex của xe còn lại, cứ tuần tự như vậy ta sẽ được kết qua như đề bài
